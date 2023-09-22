@@ -14,7 +14,7 @@ export default function ToggleMode() {
 
     localStorage.setItem('theme', 'DARK');
     setTheme('DARK');
-  }, ['DARK', 'LIGHT', setTheme, theme]);
+  }, [setTheme, theme]);
 
   return (
     <div onClick={handleChangeTheme}>
@@ -24,14 +24,3 @@ export default function ToggleMode() {
     </div>
   );
 }
-
-// display: flex;
-// justify-content: center;
-// align-items: center;
-
-// border: 2px solid black
-// color: var(--yellow);
-// border-radius: 15px;
-// font-size: 2rem;
-// cursor: pointer;
-// transition: all 0.15s ease-in-out;
