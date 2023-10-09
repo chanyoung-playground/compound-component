@@ -1,10 +1,12 @@
 import React from 'react';
 import CardMenu from './CardMenu';
 import { useRecoilValue } from 'recoil';
-import { itemListState } from '../recoil/itemList';
+import { itemState } from '../recoil/itemList';
 
 export default function Card() {
-  const items = useRecoilValue(itemListState);
+  const items = useRecoilValue(itemState);
+
+  console.log(items);
   return (
     <ul className='flex gap-2 '>
       {items.map((item) => (

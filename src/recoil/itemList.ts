@@ -1,4 +1,4 @@
-import { atom, selectorFamily } from 'recoil';
+import { selector, atom, selectorFamily, atomFamily } from 'recoil';
 
 export type Item = {
   name: string;
@@ -6,35 +6,28 @@ export type Item = {
   description: string;
 };
 
-const items: Item[] = [
-  {
-    name: 'items1',
-    image: 'https://picsum.photos/200',
-    description: 'items2 ',
-  },
-  {
-    name: 'items2',
-    image: 'https://picsum.photos/200',
-    description: 'items2',
-  },
-  {
-    name: 'items3',
-    image: 'https://picsum.photos/200',
-    description: 'items3',
-  },
-];
+export const itemState = atom({
+  key: 'item',
+  default: [
+    {
+      name: '',
+      image: '',
+      description: '',
+    },
+  ],
+});
 
-// export const itemListState = atom<Item[]>({
-//   key: 'itemListState',
-//   default: items,
-// });
+export const currentItem = selector({
+  key: 'currentItem',
+  get: async ({ get }) => {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/items`);
 
-export const itemListState = selectorFamily({
-  key: 'itemListState',
-  get: (userId: number) => async () => {
-    const userData = await fetch(
-      `https://jsonplaceholder.typicode.com/users/${userId}`
-    ).then((res) => res.json());
-    return userData;
+    if (!response.ok) {
+      throw new Error('데이터를 가져올 수 없습니다.');
+    }
+
+    const items: Item[] = await response.json();
+
+    return items;
   },
 });
